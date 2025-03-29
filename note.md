@@ -16,6 +16,11 @@ iframe.onload = () => {
 
 https://github.com/futurepress/epub.js/issues/1320
 
+
+# Fix security flaw:
+Remove iframe's allow-same-origin, allow-script, add enable-annotation
+Wait for epub.js 0.4
+
 # Try form
 
  <input type="text" id="name" name="name"/>
