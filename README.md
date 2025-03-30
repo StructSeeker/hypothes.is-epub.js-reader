@@ -2,7 +2,7 @@
 
 This cloud-based epub reader allow which enable hypothes.is annotation tool (a web/pdf/epub annotation tool) and allow you to read epub book form local and internet source. 
 
-[Try it](https://structseeker.github.io/hypothes.is-epubjs-reader/)!
+[Try it](https://structseeker.github.io/hypothes.is-epub.js-reader/)!
 
 Read your epub file using the top-right upload button, the file is not transmitted to any remote server. 
 
