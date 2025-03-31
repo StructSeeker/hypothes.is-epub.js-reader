@@ -9,7 +9,11 @@
 	<meta http-equiv="Permissions-Policy" content="interest-cohort=()">
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<meta name="dc.identifier" content="hypothes.is-epub.js-reader"> 
+	<meta name="dc.relation.ispartof" content="strcutseeker"> 
+
 
 	<link rel="icon" type="image/png" href="assets/img/favicon.png">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -30,14 +34,18 @@
 			
 			document.body.addEventListener("load", function(e) {
     			if(e.target.tagName == 'IFRAME'){
-					let iframedoc = e.target.contentWindow.document
+					const iframe = e.target;
+					if (iframe.getAttribute("enable-annotation")){
+						iframe.setAttribute("enable-annotation", '')
+						// iframe.setAttribute("allow", "unload=*")
+					} 
+
+					let iframedoc = iframe.contentWindow.document
 					const epubtitle = document.querySelector('title').textContent
 					let ititle = iframedoc.querySelector('title') ?? (() => {
 						let title = iframedoc.createElement('title')
-
 						let pagetitle = iframedoc.querySelector('h1').textContent ?? location.pathname.split("/").slice(-1);
 						title.append("&emsp;" + pagetitle)
-						
 						iframedoc.head.appendChild(title);
 						return title;
 					})()
@@ -53,7 +61,7 @@
 		}
 	</script>
 
-	<script src="https://hypothes.is/embed.js" async></script>
+	<!-- <script src="https://hypothes.is/embed.js" async></script> -->
 
 </head>
 

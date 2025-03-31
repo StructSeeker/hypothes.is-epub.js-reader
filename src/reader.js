@@ -76,10 +76,9 @@ export class Reader {
 			minSpreadWidth: this.settings.spread.min,
 			width: "100%",
 
-			//script:"https://hypothes.is/embed.js",
+			// script:"https://hypothes.is/embed.js", // annotation can be made but side unseenable
 			allowScriptedContent: true,
-			// allowSameOrigin: false, 
-			// should be set false, but the option is not yet available.
+			// allowSameOrigin: true // it's enabled by default 
 
 			height: "100%",
 			snap: true
