@@ -31,7 +31,20 @@
 			document.body.addEventListener("load", function(e) {
     			if(e.target.tagName == 'IFRAME'){
 					let iframedoc = e.target.contentWindow.document
-					iframedoc.querySelector('title').prepend(document.querySelector('title').innerHTML);
+					const epubtitle = document.querySelector('title').textContent
+					let ititle = iframedoc.querySelector('title') ?? (() => {
+						let title = iframedoc.createElement('title')
+
+						let pagetitle = iframedoc.querySelector('h1').textContent ?? location.pathname.split("/").slice(-1);
+						title.append("&emsp;" + pagetitle)
+						
+						iframedoc.head.appendChild(title);
+						return title;
+					})()
+
+					if(!ititle.textContent.startsWith(epubtitle)){
+						ititle.prepend(epubtitle)
+					}
 				}
 			}, true // use capture 
 			)
