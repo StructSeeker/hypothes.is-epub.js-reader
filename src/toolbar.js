@@ -67,7 +67,7 @@ export class Toolbar {
 				reader.storage.set(e.target.result, () => {
 					reader.unload();
 					reader.init(e.target.result);
-					const url = new URL(window.location.origin);
+					const url = new URL(window.location/*.origin*/);
 					window.history.pushState({}, "", url);
 				});
 			};
