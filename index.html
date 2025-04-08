@@ -28,6 +28,10 @@
 		import { Reader } from "./dist/js/epubreader.min.js"
 		const url = new URL(window.location)
 		const path = url.searchParams.get("bookPath") || "https://s3.amazonaws.com/moby-dick/"
+		
+		let temp;
+		const iife = f => f();
+		
 		//window.onload = (e) => new Reader(path)
 		window.onload = (e) => {
 			let reader = new Reader(path);			
@@ -39,20 +43,26 @@
 						iframe.setAttribute("enable-annotation", '')
 						// iframe.setAttribute("allow", "unload=*")
 					} 
-
-					let iframedoc = iframe.contentWindow.document
-					const epubtitle = document.querySelector('title').textContent
-					let ititle = iframedoc.querySelector('title') ?? (() => {
-						let title = iframedoc.createElement('title')
-						let pagetitle = iframedoc.querySelector('h1').textContent ?? location.pathname.split("/").slice(-1);
-						title.append("&emsp;" + pagetitle)
+					
+					// Inject title for hypothes.is
+					const iframedoc = iframe.contentWindow.document
+					const ititle = iframedoc.querySelector('title') ?? (() => {
+						let title = iframedoc.createElement('title')						
 						iframedoc.head.appendChild(title);
 						return title;
 					})()
+					const epubtitle = document.querySelector('title')?.textContent?.trim() ?? ""
+					const ititletext = ititle.textContent.trim();
+					const pagetitle = iframedoc.querySelector('h1')?.textContent ?? location.pathname.split("/").at(-1)?.trim() ?? "";
+						
+					const pre =  ititletext.startsWith(epubtitle.slice(0, Math.min(7, epubtitle.length))) ? "" : epubtitle
+					const post = function(temp = pagetitle.slice(0, Math.min(7, pagetitle.length))){
+						return ititletext.startsWith(temp) || epubtitle.startsWith(temp) ?  "" : pagetitle
+					}()
 
-					if(!ititle.textContent.startsWith(epubtitle)){
-						ititle.prepend(epubtitle)
-					}
+					pre ? ititle.prepend(`${pre} `) : null;
+					post ? ititle.append(` ${post}`) : null;
+
 				}
 			}, true // use capture 
 			)
