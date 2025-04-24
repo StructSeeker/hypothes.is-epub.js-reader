@@ -72,7 +72,18 @@
 			return reader;
 		}
 	</script>
-
+	<script>
+			[
+				['https://hypothes.is/embed.js', true],
+				['document.body.style.position = "static";', false],
+			].forEach(function(arg) {
+				let [src, urlQ] = arg;
+				var script = document.createElement('script');
+				script[(urlQ ? "src" : "text")] = src;
+				script.async = false
+				document.head.appendChild(script);
+			});
+	</script>
 	<!-- <script src="https://hypothes.is/embed.js" async></script> -->
 
 </head>
