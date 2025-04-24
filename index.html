@@ -37,7 +37,9 @@
 			let reader = new Reader(path);			
 			
 			document.body.addEventListener("load", function(e) {
-    			if(e.target.tagName == 'IFRAME'){
+				if(e.target.tagName == 'IFRAME'){
+					document.body.style.position = "static";
+						
 					const iframe = e.target;
 					if (iframe.getAttribute("enable-annotation")){
 						iframe.setAttribute("enable-annotation", '')
@@ -75,7 +77,7 @@
 
 </head>
 
-<body>
+<body style="position:static !important;">
 </body>
 
 </html>
